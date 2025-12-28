@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -37,7 +36,7 @@ public class AuthService {
       return Optional.of(user);
     } catch (Exception e) {
       System.out.println(e);
-      return Optional.empty();
+      throw new RuntimeException(e.toString());
     }
   }
 
@@ -54,7 +53,7 @@ public class AuthService {
       return Optional.empty();
     } catch (Exception e) {
       System.out.println(e);
-      return Optional.empty();
+      throw new RuntimeException(e.toString());
     }
   }
 }
