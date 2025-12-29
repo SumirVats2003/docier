@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-signup',
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
 export class SignupComponent {
   constructor(private router:Router) {}
 
-  async onSubmit() {
+  onSubmit() {
     this.router.navigate(['/home']);
   }
 }
