@@ -1,10 +1,9 @@
 package com.sumirvats2003.docier.service;
 
+import com.sumirvats2003.docier.dto.AuthRequest;
 import com.sumirvats2003.docier.model.User;
 import com.sumirvats2003.docier.repository.AuthRepository;
 import com.sumirvats2003.docier.utils.JwtUtils;
-import com.sumirvats2003.docier.dto.LoginRequest;
-import com.sumirvats2003.docier.dto.SignupRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,14 +25,15 @@ public class AuthService {
   private JwtUtils jwtUtils;
 
   @Transactional
-  public Optional<User> signup(SignupRequest signupRequest) {
+  public Optional<User> signup(AuthRequest authRequest) {
     try {
-      if (authRepository.findByEmail(signupRequest.getEmail()).isPresent()) {
+      if (authRepository.findByEmail(authRequest.getEmail()).isPresent()) {
         return Optional.empty();
       }
       User user = new User();
-      user.setEmail(signupRequest.getEmail());
-      user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
+      user.setName(authRequest.getName());
+      user.setEmail(authRequest.getEmail());
+      user.setPassword(passwordEncoder.encode(authRequest.getPassword()));
       user.setCreationTimestamp(Instant.now().getEpochSecond());
 
       authRepository.save(user);
@@ -45,13 +45,13 @@ public class AuthService {
   }
 
   @Transactional
-  public Optional<String> login(LoginRequest loginRequest) {
+  public Optional<String> login(AuthRequest authRequest) {
     try {
-      Optional<User> userOptional = authRepository.findByEmail(loginRequest.getEmail());
+      Optional<User> userOptional = authRepository.findByEmail(authRequest.getEmail());
       if (userOptional.isPresent()) {
         User user = userOptional.get();
-        if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-          return Optional.of(jwtUtils.generateToken(loginRequest.getEmail()));
+        if (passwordEncoder.matches(authRequest.getPassword(), user.getPassword())) {
+          return Optional.of(jwtUtils.generateToken(authRequest.getEmail()));
         }
       }
       return Optional.empty();

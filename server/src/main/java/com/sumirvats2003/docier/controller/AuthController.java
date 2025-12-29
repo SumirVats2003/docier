@@ -1,7 +1,6 @@
 package com.sumirvats2003.docier.controller;
 
-import com.sumirvats2003.docier.dto.LoginRequest;
-import com.sumirvats2003.docier.dto.SignupRequest;
+import com.sumirvats2003.docier.dto.AuthRequest;
 import com.sumirvats2003.docier.model.User;
 import com.sumirvats2003.docier.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,8 @@ public class AuthController {
   private AuthService authService;
 
   @PostMapping("/signup")
-  public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest) {
-    Optional<User> registeredUser = authService.signup(signupRequest);
+  public ResponseEntity<?> signup(@RequestBody AuthRequest authRequest) {
+    Optional<User> registeredUser = authService.signup(authRequest);
     if (registeredUser.isPresent()) {
       return new ResponseEntity<>(registeredUser, HttpStatus.OK);
     } else {
@@ -32,8 +31,8 @@ public class AuthController {
   }
 
   @PostMapping("/login")
-  public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-    Optional<String> userJwt = authService.login(loginRequest);
+  public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
+    Optional<String> userJwt = authService.login(authRequest);
     if (userJwt.isPresent()) {
       return new ResponseEntity<>(userJwt, HttpStatus.OK);
     } else {
