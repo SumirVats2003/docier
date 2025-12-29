@@ -15,7 +15,6 @@ import lombok.Data;
 @Table(name = "users")
 public class User {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private UUID id;
 
   @Column(nullable = false)

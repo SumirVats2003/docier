@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -31,6 +32,7 @@ public class AuthService {
         return Optional.empty();
       }
       User user = new User();
+      user.setId(UUID.randomUUID());
       user.setName(authRequest.getName());
       user.setEmail(authRequest.getEmail());
       user.setPassword(passwordEncoder.encode(authRequest.getPassword()));

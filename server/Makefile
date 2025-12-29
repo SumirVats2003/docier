@@ -6,9 +6,9 @@ healthcheck:
 signup: 
 	curl -X POST $(BASE_URL)/api/auth/signup \
 	-H 'Content-type: application/json' \
-	-d '{ "email":"email", "password": "password" }'
+	-d '{ "name": "name", "email":"test", "password": "test" }'
 
 login: 
 	curl -X POST $(BASE_URL)/api/auth/login \
 	-H 'Content-type: application/json' \
-	-d '{ "email":"email", "password": "password" }'
+	-d '{ "email":"test", "password": "test" }'
