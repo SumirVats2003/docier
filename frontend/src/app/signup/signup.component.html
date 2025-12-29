@@ -12,19 +12,19 @@
       <h4 class="card-title text-center mb-4">Create Account</h4>
       <form>
         <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Name</label>
-          <input type="text" class="form-control">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" aria-describedby="nameHelp" />
         </div>
         <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" aria-describedby="emailHelp" />
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" />
         </div>
         <div class="d-grid">
-          <button type="submit" class="btn signup-btn" (click)="onSubmit()">Sign up</button>
+          <button type="submit" class="btn signup-btn btn-primary fw-bold" (click)="onSubmit()">Sign up</button>
         </div>
         <div class="mt-2 text-center">
           <span>Already have an account?</span>

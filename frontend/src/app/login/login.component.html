@@ -12,15 +12,15 @@
       <h4 class="card-title text-center mb-4">Sign In</h4>
       <form>
         <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" aria-describedby="emailHelp" />
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" />
         </div>
         <div class="d-grid">
-          <button type="submit" class="btn login-btn" (click)="onSubmit()">Login</button>
+          <button type="submit" class="btn login-btn btn-primary fw-bold" (click)="onSubmit()">Login</button>
         </div>
         <div class="mt-2 text-center">
           <span>Don’t have an account?</span>
