@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+
+$intense-cherry: #c52233;
+$golden-pollen: #ffc857;
+$graphite: #2e3039;
+$lilac-ash: #afaab9;
+$primary: #7338a0;
+$bright-teal-blue: #027bce;
+$light: #f8f8ff;
+
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $lilac-ash,
+  "success":    $primary,
+  "info":       $bright-teal-blue,
+  "warning":    $golden-pollen,
+  "danger":     $intense-cherry,
+  "light":      $light,
+  "dark":       $graphite
+);
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+a {
+  text-decoration: none !important;
+}
+
+a:hover {
+  text-decoration: underline !important;
+}
