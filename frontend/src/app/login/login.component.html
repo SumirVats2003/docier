@@ -1,0 +1,32 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-dark">
+  <div class="card login-card">
+    <div class="image-wrapper">
+      <img
+        src="assets/river.jpg"
+        class="card-img-top login-image"
+        alt="Sign In"
+      />
+    </div>
+
+    <div class="px-5 py-4">
+      <h4 class="card-title text-center mb-4">Sign In</h4>
+      <form (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" aria-describedby="emailHelp" />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" />
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn login-btn btn-primary fw-bold">Login</button>
+        </div>
+        <div class="mt-2 text-center">
+          <span>Don’t have an account?</span>
+          <a href="#" routerLink="/signup" class="ms-1 fw-bold fs-6">Sign up</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
