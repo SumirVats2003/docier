@@ -2,6 +2,7 @@ package com.sumirvats2003.docier.service;
 
 import com.sumirvats2003.docier.model.User;
 import com.sumirvats2003.docier.repository.AuthRepository;
+import com.sumirvats2003.docier.utils.JwtUtils;
 import com.sumirvats2003.docier.dto.LoginRequest;
 import com.sumirvats2003.docier.dto.SignupRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class AuthService {
 
   @Autowired
   private PasswordEncoder passwordEncoder;
+
+  @Autowired
+  private JwtUtils jwtUtils;
 
   @Transactional
   public Optional<User> signup(SignupRequest signupRequest) {
@@ -41,13 +45,13 @@ public class AuthService {
   }
 
   @Transactional
-  public Optional<User> login(LoginRequest loginRequest) {
+  public Optional<String> login(LoginRequest loginRequest) {
     try {
       Optional<User> userOptional = authRepository.findByEmail(loginRequest.getEmail());
       if (userOptional.isPresent()) {
         User user = userOptional.get();
         if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-          return userOptional;
+          return Optional.of(jwtUtils.generateToken(loginRequest.getEmail()));
         }
       }
       return Optional.empty();

@@ -33,10 +33,9 @@ public class AuthController {
 
   @PostMapping("/login")
   public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-    Optional<User> authenticatedUser = authService.login(loginRequest);
-    if (authenticatedUser.isPresent()) {
-      // Create JWT Token
-      return new ResponseEntity<>(authenticatedUser, HttpStatus.OK);
+    Optional<String> userJwt = authService.login(loginRequest);
+    if (userJwt.isPresent()) {
+      return new ResponseEntity<>(userJwt, HttpStatus.OK);
     } else {
       return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
     }
