@@ -15,25 +15,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sumirvats2003.docier.dto.DocumentRequest;
-import com.sumirvats2003.docier.model.Document;
-import com.sumirvats2003.docier.service.DocumentService;
+import com.sumirvats2003.docier.dto.SpaceRequest;
+import com.sumirvats2003.docier.model.Space;
+import com.sumirvats2003.docier.service.SpaceService;
 
 @RestController
-@RequestMapping("/api/document")
-public class DocumentController {
+@RequestMapping("/api/space")
+public class SpaceController {
 
   @Autowired
-  private DocumentService documentService;
+  private SpaceService spaceService;
 
   @GetMapping("/{id}")
-  public ResponseEntity<?> getDocumentById(@PathVariable UUID id) {
+  public ResponseEntity<?> getSpaceById(@PathVariable UUID id) {
     try {
-      Optional<Document> document = documentService.getDocumentById(id);
-      if (document.isPresent()) {
-        return new ResponseEntity<>(document, HttpStatus.OK);
+      Optional<Space> space = spaceService.getSpaceById(id);
+      if (space.isPresent()) {
+        return new ResponseEntity<>(space, HttpStatus.OK);
       } else {
-        return new ResponseEntity<>("No document with id: " + id, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("No space with id: " + id, HttpStatus.NOT_FOUND);
       }
     } catch (Exception e) {
       return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -41,9 +41,9 @@ public class DocumentController {
   }
 
   @PostMapping
-  public ResponseEntity<?> createDocument(@RequestBody DocumentRequest request) {
+  public ResponseEntity<?> createSpace(@RequestBody SpaceRequest request) {
     try {
-      Document created = documentService.createDocument(request);
+      Space created = spaceService.createSpace(request);
       return new ResponseEntity<>(created, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -51,9 +51,9 @@ public class DocumentController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<?> updateDocument(@PathVariable UUID id, @RequestBody DocumentRequest request) {
+  public ResponseEntity<?> updateSpace(@PathVariable UUID id, @RequestBody SpaceRequest request) {
     try {
-      Document updated = documentService.updateDocument(id, request);
+      Space updated = spaceService.updateSpace(id, request);
       return new ResponseEntity<>(updated, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -61,9 +61,9 @@ public class DocumentController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteDocument(@PathVariable UUID id) {
+  public ResponseEntity<?> deleteSpace(@PathVariable UUID id) {
     try {
-      documentService.deleteDocument(id);
+      spaceService.deleteSpace(id);
       return ResponseEntity.status(HttpStatus.OK).build();
     } catch (Exception e) {
       return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);

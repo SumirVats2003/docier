@@ -2,7 +2,7 @@ package com.sumirvats2003.docier.model;
 
 import java.util.UUID;
 
-import com.sumirvats2003.docier.dto.DocumentRequest;
+import com.sumirvats2003.docier.dto.SpaceRequest;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,8 +12,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "documents")
-public class Document implements DataEntity<DocumentRequest> {
+@Table(name = "spaces")
+public class Space implements DataEntity<SpaceRequest> {
   @Id
   private UUID id;
 
@@ -21,22 +21,18 @@ public class Document implements DataEntity<DocumentRequest> {
   private String title;
 
   @Column(nullable = false)
-  private String content;
-
-  @Column(nullable = false)
-  private UUID spaceId;
+  private UUID ownerId;
 
   private long creationTimestamp;
 
   private long modificationTimestamp;
 
   @Override
-  public void fromDTO(DocumentRequest documentRequest) {
-    if (documentRequest != null) {
+  public void fromDTO(SpaceRequest spaceRequest) {
+    if (spaceRequest != null) {
       this.setId(UUID.randomUUID());
-      this.setTitle(documentRequest.getTitle());
-      this.setContent(documentRequest.getContent());
-      this.setSpaceId(documentRequest.getSpaceId());
+      this.setTitle(spaceRequest.getTitle());
+      this.setOwnerId(spaceRequest.getOwnerId());
     }
   }
 }

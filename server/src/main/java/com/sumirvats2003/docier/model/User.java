@@ -2,6 +2,8 @@ package com.sumirvats2003.docier.model;
 
 import java.util.UUID;
 
+import com.sumirvats2003.docier.dto.AuthRequest;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -11,7 +13,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements DataEntity<AuthRequest> {
   @Id
   private UUID id;
 
@@ -26,4 +28,14 @@ public class User {
 
   @Column()
   private long creationTimestamp;
+
+  @Override
+  public void fromDTO(AuthRequest authRequest) {
+    if (authRequest != null) {
+      this.setId(UUID.randomUUID());
+      this.setName(authRequest.getName());
+      this.setEmail(authRequest.getEmail());
+      this.setPassword(authRequest.getPassword());
+    }
+  }
 }

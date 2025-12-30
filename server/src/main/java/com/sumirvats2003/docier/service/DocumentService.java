@@ -36,6 +36,7 @@ public class DocumentService {
     Document savedDocument = documentRepository.save(document);
 
     SpaceDocs spaceDocs = new SpaceDocs();
+    spaceDocs.setId(UUID.randomUUID());
     spaceDocs.setSpaceId(savedDocument.getSpaceId());
     spaceDocs.setDocumentId(savedDocument.getId());
     spaceDocsRepository.save(spaceDocs);
