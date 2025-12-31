@@ -68,4 +68,5 @@ target/
 */Thumbs.db
 
 
+# env
 */.env
