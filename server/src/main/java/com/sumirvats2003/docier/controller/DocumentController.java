@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sumirvats2003.docier.dto.DocumentRequest;
 import com.sumirvats2003.docier.model.Document;
+import com.sumirvats2003.docier.model.SpaceDocId;
 import com.sumirvats2003.docier.service.DocumentService;
 
 @RestController
@@ -61,9 +62,9 @@ public class DocumentController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteDocument(@PathVariable UUID id) {
+  public ResponseEntity<?> deleteDocument(@RequestBody SpaceDocId spaceDocId) {
     try {
-      documentService.deleteDocument(id);
+      documentService.deleteDocument(spaceDocId);
       return ResponseEntity.status(HttpStatus.OK).build();
     } catch (Exception e) {
       return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);

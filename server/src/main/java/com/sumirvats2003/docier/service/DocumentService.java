@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sumirvats2003.docier.dto.DocumentRequest;
 import com.sumirvats2003.docier.model.Document;
+import com.sumirvats2003.docier.model.SpaceDocId;
 import com.sumirvats2003.docier.model.SpaceDocs;
 import com.sumirvats2003.docier.repository.DocumentRepository;
 import com.sumirvats2003.docier.repository.SpaceDocsRepository;
@@ -35,10 +36,12 @@ public class DocumentService {
     document.setCreationTimestamp(Instant.now().getEpochSecond());
     Document savedDocument = documentRepository.save(document);
 
+    SpaceDocId spaceDocId = new SpaceDocId();
+    spaceDocId.setSpaceId(documentRequest.getSpaceId());
+    spaceDocId.setDocumentId(document.getId());
+
     SpaceDocs spaceDocs = new SpaceDocs();
-    spaceDocs.setId(UUID.randomUUID());
-    spaceDocs.setSpaceId(savedDocument.getSpaceId());
-    spaceDocs.setDocumentId(savedDocument.getId());
+    spaceDocs.setSpaceDocId(spaceDocId);
     spaceDocsRepository.save(spaceDocs);
 
     return savedDocument;
@@ -54,11 +57,11 @@ public class DocumentService {
   }
 
   @Transactional
-  public void deleteDocument(UUID id) {
-    Document document = documentRepository.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("No document found with id: " + id));
+  public void deleteDocument(SpaceDocId spaceDocId) {
+    Document document = documentRepository.findById(spaceDocId.getDocumentId())
+        .orElseThrow(() -> new EntityNotFoundException("No document found with id: " + spaceDocId.getDocumentId()));
 
-    spaceDocsRepository.deleteByDocumentId(id);
+    spaceDocsRepository.deleteBySpaceDocId(spaceDocId);
     documentRepository.delete(document);
   }
 }
