@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../../model/user';
 import { environment } from '../../environment';
 import axios, { AxiosInstance } from 'axios';
+import { LocalStorageKeys } from '../../model/local-storage';
 
 @Injectable({
   providedIn: 'root'
@@ -14,31 +15,44 @@ export class AuthService {
     this.axiosInstance = axios.create({
       baseURL: this.baseUrl,
       timeout: 10000,
-      // headers: { 'Authorization': 'Bearer jwt' }
     });
   }
 
-  async login(user: User, password: string) {
-    try {
-      if (password && user) {
-        // bcrypt.encode (password) => encoded password string == encodedPassword
-        const encodedPassword = "";
+  async login(user: User, password: string): Promise<string> {
+    if (password && user) {
+      const result = await this.axiosInstance.post('api/auth/login', {
+        name: user.name,
+        email: user.email,
+        password
+      });
 
-        const result = await this.axiosInstance.post('api/auth/login', {
-          name: user.name,
-          email: user.email,
-          password: encodedPassword
-        });
+      if (result.status === 200) {
+        const jwt = result.data;
+        localStorage.setItem(LocalStorageKeys.JWT, jwt);
+        return jwt;
+      }
+    }
+    return "";
+  }
 
-        if (result.status === 200) {
-          const jwt = result.data;
-          // save jwt to localstorage
-        } else {
-          // gracefully handle the unauthorization like show username or password incorrect
+  async signup(user: User, password: string): Promise<string> {
+    if (password && user) {
+      const result = await this.axiosInstance.post('api/auth/signup', {
+        name: user.name,
+        email: user.email,
+        password
+      });
+
+      if (result.status === 200) {
+        if (result.data) {
+          const jwt = await this.login(user, password);
+          if (jwt) {
+            localStorage.setItem(LocalStorageKeys.JWT, jwt);
+            return jwt;
+          }
         }
       }
-    } catch (err) {
-      console.log(err);
     }
+    return "";
   }
 }

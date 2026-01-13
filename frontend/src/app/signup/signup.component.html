@@ -10,27 +10,77 @@
 
     <div class="px-5 py-4">
       <h4 class="card-title text-center mb-4">Create Account</h4>
-      <form (ngSubmit)="onSubmit()">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
           <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control" id="name" aria-describedby="nameHelp" />
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            formControlName="name"
+            [ngClass]="{ 'is-invalid': name?.invalid && (name?.dirty || name?.touched) }"
+          />
+          <div class="invalid-feedback" *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+            Name is required
+          </div>
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="email" aria-describedby="emailHelp" />
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            formControlName="email"
+            [ngClass]="{ 'is-invalid': email?.invalid && (email?.dirty || email?.touched) }"
+          />
+          <div class="invalid-feedback" *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+            <span *ngIf="email?.errors?.['required']">Valid email is required</span>
+            <span *ngIf="email?.errors?.['email']">Please enter a valid email address</span>
+          </div>
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" />
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            formControlName="password"
+            [ngClass]="{ 'is-invalid': password?.invalid && (password?.dirty || password?.touched) }"
+          />
+          <div class="invalid-feedback" *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+            Password is required
+          </div>
         </div>
         <div class="d-grid">
-          <button type="submit" class="btn signup-btn btn-primary fw-bold">Sign up</button>
+          <button
+            type="submit"
+            class="btn signup-btn btn-primary fw-bold"
+            [disabled]="isSubmitting || signupForm.invalid"
+          >
+            <span *ngIf="!isSubmitting">Sign up</span>
+            <span *ngIf="isSubmitting">
+              <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              Signing up...
+            </span>
+          </button>
         </div>
         <div class="mt-2 text-center">
           <span>Already have an account?</span>
           <a href="#" routerLink="/login" class="ms-1 fw-bold fs-6">Sign in</a>
         </div>
       </form>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div #signupToast class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header" #toastContainer>
+        <strong class="me-auto" #toastTitle>Notification</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body" #toastMessage>
+        Message goes here
+      </div>
     </div>
   </div>
 </div>
